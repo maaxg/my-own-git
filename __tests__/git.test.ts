@@ -1,3 +1,4 @@
+import { Commit } from "../src/commit";
 import { Git } from "../src/git";
 
 describe("Git", () => {
@@ -7,45 +8,62 @@ describe("Git", () => {
    // Creation of commit and repo
   test('git should create commit and repo', () => {
     const git = new Git();
-    const repository = git.createRepository('second-repo');
-    const commit = git.createCommit('message');
-    expect(commit.message).toEqual('message')
-    expect(repository.name).toEqual('second-repo')
+    const repository = git.createRepository('repository');
+    repository.branch.commit = new Commit('message', repository.branch.commit)
+    const commit =  repository.branch.commit
+    expect(commit?.message).toEqual('message')
+    expect(repository.name).toEqual('repository')
   })
   // Commit history
   test('git should return commit history', () => {
     const git = new Git();
-    const commit1 = git.createCommit('message');
-    const commit2 = git.createCommit('message2');
-    expect(git.getCommitLog()).toEqual([commit2.id, commit1.id])
+    const repository = git.createRepository('repository');
+    repository.branch.commit = new Commit('message', repository.branch.commit)
+    const commit1 = repository.branch.commit
+    const commit2 = new Commit('message2', commit1);
+    repository.branch.commit = commit2
+    expect(repository.branch.commit?.getCommitLog()).toEqual([commit2.id, commit1.id])
   })
   // Branch checkout default
-  test('should be able checkout default branch', () => {
+ test('should be able checkout default branch', () => {
     const git = new Git();
-    const branch = git.checkoutBranch();
-    expect(branch.name).toEqual('main')
+    const repo = git.repository
+    const currBranch = repo.checkout();
+    expect(currBranch.name).toEqual('main')
   })
   // Should be able to create a new branch on checkout
-  test('should be able checkout default branch', () => {
+   test('should be able checkout default branch', () => {
     const git = new Git();
-    const branch = git.checkoutBranch('master');
-    expect(branch.name).toEqual('master')
-    expect(git.checkoutBranch('master').name).toEqual('master')
-    git.checkoutBranch('testing')
-    expect(git.checkoutBranch('testing').name).toEqual('testing')
-  })
+    const repo = git.repository
+    const currBranch = repo.checkout('master');
+    expect(currBranch.name).toEqual('master')
+    expect(repo.checkout('master').name).toEqual('master')
+    repo.checkout('testing')
+    expect(repo.checkout('testing').name).toEqual('testing')
+  }) 
   // Commit history 
   test('should be able to keep commit history', () => {
     const git = new Git();
-    const commit1 = git.createCommit('commit1')
-    git.checkoutBranch('master');
-    const commit2 = git.createCommit('commit2')
-    git.checkoutBranch('another-master');
-    
-    expect(git.getCommitLog()).toEqual([
+    let branch = git.repository.branch
+    const commit = branch.commit
+    const commit1 = new Commit('commit1', commit) 
+    branch.commit = commit1
+    git.repository.checkout('master');
+    branch = git.repository.branch
+    const commit2 = new Commit('commit2', commit1)
+    branch.commit = commit2;
+    git.repository.checkout('another-master');
+    branch = git.repository.branch
+    const commit3 = new Commit('commit3', commit2)
+    branch.commit = commit3;
+    git.repository.checkout('another-master');
+    branch = git.repository.branch
+
+    expect(branch.commit?.getCommitLog()).toEqual([
+      commit3.id,
       commit2.id,
       commit1.id
     ])
 
-  })
+  }) 
 })
