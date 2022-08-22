@@ -3,6 +3,7 @@ import { Git } from "../src/git";
 import { Repository } from "../src/repository";
 
 describe("Git", () => {
+
   test('should return repo name properly', () => {
     const repo = new Repository('first-repo');
     expect(repo.name).toEqual('first-repo')
@@ -19,5 +20,12 @@ describe("Git", () => {
     const repository = git.createRepository('second-repo');
     expect(commit.message).toEqual('message')
     expect(repository.name).toEqual('second-repo')
+  })
+
+  test('git should return commit history', () => {
+    const git = new Git();
+    const commit1 = git.createCommit('message');
+    const commit2 = git.createCommit('message2');
+    expect(git.getCommitLog()).toEqual([commit2.id, commit1.id])
   })
 })

@@ -7,4 +7,6 @@ export interface GitI {
   createRepository: (name: string) => RepositoryI
   /* Returns commit message if successfull */
   createCommit: (message: string) => CommitI
+  /* Returns commit history */
+  getCommitLog: () => string[];
 }
