@@ -1,7 +1,4 @@
-import { Branch } from "./branch";
-import { Commit } from "./commit";
-import { BranchI } from "./domain/branch-interface";
-import { CommitI } from "./domain/commit-interface";
+import { Add } from "./add";
 import { GitI } from "./domain/git-interface";
 import { RepositoryI } from "./domain/repository-interface";
 import { Repository } from "./repository";
@@ -17,4 +14,7 @@ export class Git implements GitI {
     this.repository = new Repository(name);
     return this.repository
   };
+  add(path: string){
+    return new Add().stageFile(path)
+  }
 }
