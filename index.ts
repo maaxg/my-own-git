@@ -1,7 +1,8 @@
-console.info('> Beat - Version: 0.0.0.1')
+console.info('> Quati - Version: 0.0.0.1')
 console.info('> Ctrl + C to close')
-const readline = require("readline");
-
+import * as readline from 'readline'
+import { syntaxValidator } from './syntax-validation';
+import {Git} from './src/'
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -21,8 +22,9 @@ rl.on("close", function() {
  */
 
 const readCommand = () => {
-  rl.question('beat> ', (command) => {
-    console.log(command)
+  const git = new Git()
+  rl.question('quati> ', (command: string) => {
+    syntaxValidator(command, git)
     readCommand()
   })
 }

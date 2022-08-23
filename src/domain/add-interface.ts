@@ -1,3 +1,3 @@
 export interface AddI {
-  stageFile: (path: string) => Boolean
+  stageFile: (path: string) => boolean
 }

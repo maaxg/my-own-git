@@ -5,7 +5,7 @@ export class Add implements AddI {
   constructor(dbPath?: string) {
     this.dbPath = dbPath || './store.txt'
   }
-  stageFile(path: string): Boolean {
+  stageFile(path: string): boolean {
     if(fs.existsSync(path)) {
       try{
         fs.writeFileSync(this.dbPath, path);

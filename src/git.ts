@@ -14,7 +14,7 @@ export class Git implements GitI {
     this.repository = new Repository(name);
     return this.repository
   };
-  add(path: string){
+  add(path: string): boolean {
     return new Add().stageFile(path)
   }
 }

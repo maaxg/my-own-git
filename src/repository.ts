@@ -18,6 +18,7 @@ export class Repository implements RepositoryI {
     private add(branch: BranchI){
       this.branches?.push(branch)
     }
+    /* Checkout branch  */
     checkout(name?: string): BranchI {
       if(!name){
         console.info(`Current branch: ${this.branch.name}`)

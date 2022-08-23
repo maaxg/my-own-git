@@ -2,10 +2,11 @@
   "name": "my-own-git",
   "version": "1.0.0",
   "description": "My own git is a experience",
-  "main": "index.ts",
+  "main": "index.js",
+  "type": "commonjs",
   "scripts": {
     "test": "jest --watch",
-    "start": "node index.ts"
+    "start": "tsc index.ts && node index.js"
   },
   "keywords": [
     "my-own-git"
