@@ -22,6 +22,11 @@ export const syntaxValidator = (value: string, git: GitI) => {
     console.error("\x1b[31mInvalid command:\x1b[0m please use 'qti' with other avaliable commands: ", VALID_VALUES)
     return;
   }
+  if(value.includes("checkout") && !VALID_VALUES.includes(splitted[2])) {
+    const branchName = splitted[2]
+    git.repository.checkout(branchName);
+    return;
+  }
   if(value.includes("checkout") && splitted.length === 2){
     git.repository.checkout();
     return;

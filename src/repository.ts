@@ -26,7 +26,7 @@ export class Repository implements RepositoryI {
       }
       const branchIdx = this.branches?.findIndex((branch) => branch.name === name);
       /* If branch already exists changes to existing branch */ 
-      if(branchIdx && branchIdx !== -1 && this.branches?.length) {
+      if(branchIdx !== undefined && branchIdx !== -1 && this.branches?.length) {
         this.branch = this.branches[branchIdx];
         console.info(`Switched to branch: ${this.branch.name}`)
         return this.branch;
