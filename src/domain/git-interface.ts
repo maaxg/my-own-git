@@ -1,9 +1,12 @@
-import { RepositoryI } from "./repository-interface";
+import { BranchI } from "./branch-interface";
 
 export interface GitI {
-  /* Returns repo name if successfull */
-  createRepository: (name: string) => RepositoryI
-  add: (path: string) => boolean
-  repository: RepositoryI
-
+  name: string
+  branch: BranchI
+  /*
+    if exists changes to branch 
+    if not exists create and change to branch
+  */
+  checkout: (name?: string) => BranchI;
+  stageFile: (path: string) => boolean
 }
