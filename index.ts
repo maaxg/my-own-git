@@ -3,31 +3,24 @@ console.info('> Ctrl + C to close')
 import * as readline from 'readline'
 import { syntaxValidator } from './syntax-validation';
 import {Git} from './src/'
+
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
-
-/* rl.question("What is your name ? ", function(name) {
-    rl.question("Where do you live ? ", function(country) {
-        console.log(`${name}, is a citizen of ${country}`);
-        rl.close();
-    });
-});
-
-rl.on("close", function() {
-    console.log("\nBYE BYE !!!");
-    process.exit(0);
-});
- */
+const git = new Git()
 
 const readCommand = () => {
-  const git = new Git()
   rl.question('quati> ', (command: string) => {
     syntaxValidator(command, git)
     readCommand()
   })
 }
+rl.on("close", function() {
+  console.log("\nSee you space cowboy");
+  process.exit(0);
+});
+
 
 
 readCommand()

@@ -7,12 +7,10 @@ import { Repository } from "./repository";
 export class Git implements GitI {
   repository: RepositoryI
   constructor() {
-    this.createRepository('default-repository')
+    this.repository = this.createRepository('default-repository')
   }
   createRepository(name: string): RepositoryI  {
-    // Keeping head on track
-    this.repository = new Repository(name);
-    return this.repository
+    return new Repository(name);
   };
   add(path: string): boolean {
     return new Add().stageFile(path)

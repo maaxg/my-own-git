@@ -1,5 +1,5 @@
 import { AddI } from "./domain/add-interface";
-import fs from 'fs'
+import * as fs from 'fs'
 export class Add implements AddI {
   private dbPath: string
   constructor(dbPath?: string) {

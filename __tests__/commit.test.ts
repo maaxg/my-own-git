@@ -1,9 +1,9 @@
 import { Commit } from "../src/commit"
-
+import sha1 from 'sha1'
 describe('Commit', () => {
    test('should create a commit properly', () => {
-    const commit = new Commit('message', null, 'message')
+    const commit = new Commit('message', null)
     expect(commit.message).toEqual('message')
-    expect(commit.id).toEqual("6f9b9af3cd6e8b8a73c2cdced37fe9f59226e27d")
+    expect(commit.id).toEqual(sha1(commit.content))
   }) 
 })
