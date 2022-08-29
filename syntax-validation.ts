@@ -11,7 +11,7 @@ const VALID_VALUES = [
   "checkout"
 ]
 
-const startsProperly = (value: string): boolean => {
+const isCommandStartProperly = (value: string): boolean => {
   const splitted = value.split(' ')
   if(!value.startsWith("qti")) {
     console.error("\x1b[31mInvalid command:\x1b[0m start with 'qti'")
@@ -24,7 +24,7 @@ const startsProperly = (value: string): boolean => {
   return true;
 }
 
-const isCheckoutValid = (value: string, git: GitI, splittedValue: string[]): boolean | void=> {
+const isCheckoutCommandValid = (value: string, git: GitI, splittedValue: string[]): boolean | void=> {
   if(value.includes("checkout") && !VALID_VALUES.includes(splittedValue[2])) {
     const branchName = splittedValue[2]
     git.checkout(branchName);
@@ -74,9 +74,9 @@ const isAddCommandValid = (value: string, git: GitI, splittedValue: string[]): b
 }
 
 export const syntaxValidator = (value: string, git: GitI) => {
-  if(!startsProperly(value)) return;
+  if(!isCommandStartProperly(value)) return;
   const splitted = value.split(' ')
-  if(isCheckoutValid(value, git, splitted)) return;
+  if(isCheckoutCommandValid(value, git, splitted)) return;
   if(isBranchCommandValid(value, git, splitted)) return;
   if(isLogCommandValid(value, git, splitted)) return;
   if(isCommitCommandValid(value, git, splitted)) return;
