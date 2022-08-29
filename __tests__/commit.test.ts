@@ -5,5 +5,5 @@ describe('Commit', () => {
     const commit = new Commit('message', null)
     expect(commit.message).toEqual('message')
     expect(commit.id).toEqual(sha1(commit.content))
-  }) 
+  })
 })
